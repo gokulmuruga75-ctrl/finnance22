@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#07120d">
+<title>FinanceGuide</title>
+<style>
+:root{--bg:#07120d;--panel:#0d2118;--line:rgba(180,255,210,.12);--text:#effff5;--muted:#8fa99b;--accent:#68e99e;--user:#16482f;--ai:#10241b;--danger:#ff8c8c}
+*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0}
+body{min-height:100dvh;overflow:hidden;color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(circle at 10% 8%,rgba(70,230,145,.14),transparent 30%),radial-gradient(circle at 90% 90%,rgba(50,170,110,.1),transparent 28%),var(--bg)}
+.app{width:min(1180px,94vw);height:min(900px,94dvh);min-height:0;margin:3dvh auto;display:grid;grid-template-columns:280px minmax(0,1fr);overflow:hidden;border:1px solid var(--line);border-radius:28px;background:rgba(10,28,20,.94);box-shadow:0 30px 100px rgba(0,0,0,.45);backdrop-filter:blur(22px)}
+.sidebar{min-height:0;padding:26px;display:flex;flex-direction:column;border-right:1px solid var(--line);background:rgba(3,14,9,.45)}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:34px}.mark{width:45px;height:45px;display:grid;place-items:center;border-radius:15px;color:#04160c;background:linear-gradient(135deg,var(--accent),#d6ffe4);font-weight:900;font-size:20px}.brand strong{font-size:16px}.brand small{display:block;margin-top:2px;color:var(--muted);font-size:11px}
+.eyebrow{margin-bottom:8px;color:var(--accent);font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.sidebar h1{margin:0 0 12px;font-size:29px;line-height:1.05;letter-spacing:-.045em}.intro{margin:0;color:var(--muted);font-size:12px;line-height:1.65}.topics{display:grid;gap:8px;margin-top:24px}.topic{padding:11px 12px;border:1px solid var(--line);border-radius:13px;color:#cde8d8;background:rgba(255,255,255,.025);font-size:11px}.topic b{margin-right:7px;color:var(--accent)}.notice{margin-top:auto;padding:13px;border:1px solid var(--line);border-radius:15px;color:var(--muted);font-size:10px;line-height:1.55}
+.chat{min-width:0;min-height:0;height:100%;display:flex;flex-direction:column}.header{height:72px;flex:0 0 72px;display:flex;align-items:center;justify-content:space-between;padding:0 23px;border-bottom:1px solid var(--line)}.title{font-weight:800;font-size:15px}.status{display:flex;align-items:center;gap:7px;margin-top:3px;color:var(--muted);font-size:10px}.dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 13px var(--accent)}.clear{border:1px solid var(--line);border-radius:11px;padding:8px 11px;color:var(--muted);background:rgba(255,255,255,.025);cursor:pointer;font:inherit;font-size:10px}
+.messages{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:28px clamp(15px,4vw,48px);scroll-behavior:smooth}.inner{width:min(760px,100%);margin:0 auto}
+.welcome{margin:7vh auto 30px;text-align:center}.icon{width:68px;height:68px;display:grid;place-items:center;margin:0 auto 17px;border:1px solid var(--line);border-radius:23px;color:var(--accent);background:rgba(104,233,158,.07);font-size:27px}.welcome h2{margin:0 0 9px;font-size:25px;letter-spacing:-.04em}.welcome p{max-width:530px;margin:0 auto;color:var(--muted);font-size:12px;line-height:1.65}.suggestions{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:18px}.suggestion{padding:9px 12px;border:1px solid var(--line);border-radius:999px;color:#ccebd9;background:rgba(255,255,255,.025);cursor:pointer;font:inherit;font-size:10px}.suggestion:hover{color:#b9ffd4;border-color:rgba(104,233,158,.35)}
+.message{display:flex;margin-bottom:17px}.message.user{justify-content:flex-end}.bubble{max-width:min(78%,650px);padding:13px 16px;border:1px solid var(--line);border-radius:17px;color:var(--text);background:var(--ai);font-size:13px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word}.message.user .bubble{border-color:rgba(104,233,158,.18);border-bottom-right-radius:5px;background:var(--user)}.message.ai .bubble{border-bottom-left-radius:5px}.typing{display:inline-flex;gap:4px}.typing span{width:5px;height:5px;border-radius:50%;background:var(--muted);animation:pulse 1s infinite ease-in-out}.typing span:nth-child(2){animation-delay:.15s}.typing span:nth-child(3){animation-delay:.3s}@keyframes pulse{0%,70%,100%{opacity:.3;transform:translateY(0)}35%{opacity:1;transform:translateY(-3px)}}
+.composer-wrap{flex:0 0 auto;padding:12px 23px 21px;border-top:1px solid var(--line);background:rgba(7,17,13,.8)}.composer{width:min(760px,100%);min-height:50px;margin:0 auto;display:flex;align-items:flex-end;gap:8px;padding:7px;border:1px solid var(--line);border-radius:17px;background:rgba(21,43,33,.82)}textarea{flex:1 1 auto;min-width:0;min-height:36px;max-height:120px;resize:none;padding:10px 11px 8px;border:0;outline:0;color:var(--text);background:transparent;font:inherit;font-size:12px;line-height:1.45}textarea::placeholder{color:#71897d}.send{width:38px;height:38px;flex:0 0 38px;border:0;border-radius:12px;color:#04160c;background:var(--accent);cursor:pointer;font-size:17px;font-weight:900}.send:disabled{cursor:wait;opacity:.45}.error{color:var(--danger)!important}
+@media(max-width:760px){.app{width:100%;height:100dvh;min-height:0;margin:0;grid-template-columns:1fr;border:0;border-radius:0}.sidebar{display:none}.header{height:64px;flex-basis:64px;padding:0 15px}.messages{padding:20px 13px}.bubble{max-width:88%}.composer-wrap{padding:9px 11px max(12px,env(safe-area-inset-bottom))}.welcome{margin-top:10vh}.welcome h2{font-size:22px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+<div class="brand"><div class="mark">F</div><div><strong>FinanceGuide</strong><small>Focused finance assistant</small></div></div>
+<div class="eyebrow">Finance only</div>
+<h1>Understand money with clarity.</h1>
+<p class="intro">Explore finance concepts, calculations, investing fundamentals, banking, budgeting, and related topics.</p>
+<div class="topics">
+<div class="topic"><b>01</b> Personal finance</div>
+<div class="topic"><b>02</b> Investing & markets</div>
+<div class="topic"><b>03</b> Banking & credit</div>
+<div class="topic"><b>04</b> Finance calculations</div>
+</div>
+<div class="notice">FinanceGuide provides educational information and does not guarantee financial outcomes or replace professional advice.</div>
+</aside>
+
+<main class="chat">
+<header class="header">
+<div><div class="title">FinanceGuide</div><div class="status"><span class="dot"></span>Online · Finance assistant</div></div>
+<button class="clear" id="clear" type="button">Clear chat</button>
+</header>
+
+<section class="messages" id="messages" aria-live="polite">
+<div class="inner" id="inner">
+<div class="welcome" id="welcome">
+<div class="icon">₣</div>
+<h2>What can I help you understand?</h2>
+<p>Ask a finance-related question and I'll explain it clearly, with examples or calculations when useful.</p>
+<div class="suggestions">
+<button class="suggestion" type="button">Explain compound interest</button>
+<button class="suggestion" type="button">What is a bond?</button>
+<button class="suggestion" type="button">Explain inflation</button>
+</div>
+</div>
+</div>
+</section>
+
+<div class="composer-wrap">
+<form class="composer" id="form">
+<textarea id="input" rows="1" maxlength="4000" placeholder="Ask a finance question..." autocomplete="off"></textarea>
+<button class="send" id="send" type="submit" aria-label="Send">↑</button>
+</form>
+</div>
+</main>
+</div>
+
+<script>
+const form=document.getElementById("form"),input=document.getElementById("input"),send=document.getElementById("send"),clear=document.getElementById("clear"),messages=document.getElementById("messages"),inner=document.getElementById("inner");
+const welcomeHTML=`<div class="welcome" id="welcome"><div class="icon">₣</div><h2>What can I help you understand?</h2><p>Ask a finance-related question and I'll explain it clearly, with examples or calculations when useful.</p><div class="suggestions"><button class="suggestion" type="button">Explain compound interest</button><button class="suggestion" type="button">What is a bond?</button><button class="suggestion" type="button">Explain inflation</button></div></div>`;
+
+function scrollLatest(){requestAnimationFrame(()=>{messages.scrollTop=messages.scrollHeight})}
+function removeWelcome(){const w=document.getElementById("welcome");if(w)w.remove()}
+function addMessage(text,role){removeWelcome();const row=document.createElement("div");row.className=`message ${role}`;const bubble=document.createElement("div");bubble.className="bubble";bubble.textContent=text;row.appendChild(bubble);inner.appendChild(row);scrollLatest();return bubble}
+function typing(){removeWelcome();const row=document.createElement("div");row.className="message ai";row.id="typing";const bubble=document.createElement("div");bubble.className="bubble typing";bubble.innerHTML="<span></span><span></span><span></span>";row.appendChild(bubble);inner.appendChild(row);scrollLatest()}
+function bindSuggestions(){inner.querySelectorAll(".suggestion").forEach(b=>b.onclick=()=>{input.value=b.textContent.trim();input.dispatchEvent(new Event("input"));input.focus()})}
+function loading(v){input.disabled=v;send.disabled=v;send.textContent=v?"…":"↑"}
+
+input.addEventListener("input",()=>{input.style.height="auto";input.style.height=Math.min(input.scrollHeight,120)+"px"});
+input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();form.requestSubmit()}});
+bindSuggestions();
+
+clear.onclick=()=>{inner.innerHTML=welcomeHTML;bindSuggestions();input.value="";input.style.height="auto";input.focus()};
+
+form.addEventListener("submit",async e=>{
+e.preventDefault();const message=input.value.trim();if(!message||send.disabled)return;
+addMessage(message,"user");input.value="";input.style.height="auto";loading(true);typing();
+try{
+const response=await fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message})});
+const data=await response.json();document.getElementById("typing")?.remove();
+if(!response.ok){const b=addMessage(data.error||"Something went wrong. Please try again.","ai");b.classList.add("error");return}
+addMessage(data.response,"ai");
+}catch(err){document.getElementById("typing")?.remove();const b=addMessage("Unable to connect to FinanceGuide right now. Please try again.","ai");b.classList.add("error")}
+finally{loading(false);input.focus()}
+});
+input.focus();
+</script>
+</body>
+</html>
